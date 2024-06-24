@@ -26,7 +26,7 @@ The script must be running on the same machine as your Discord client.
   * `hideTotalTime` (boolean, default: `false`) - Hides the total duration of the media if enabled.
   * `useRemainingTime` (boolean, default: `false`) - Displays the media's remaining time instead of elapsed time if enabled.
   * `posters`
-    * `enabled` (boolean, default: `false`) - Uses [cover-uploady](https://github.com/voidlynx/cover-uploady) to display a cover art. Requires `cuClientID`.
+    * `enabled` (boolean, default: `false`) - Uses [cover-uploady](https://github.com/voidlynx/cover-uploady) to display a cover art. Requires setup of the two variables below. See [usage](#cover-uploady-usage).
     * `cuDomain` (string, default: `""`) - Domain that cover-uploady is hosted on. The `/upload` and `/cover.jpg` endpoints are automatically appended when required, don't worry.
     * `cuSecret` (string, default: `""`) - Cover-uploady's secret passphrase for uploads. See below.
   * `buttons` (list) - [Information](#buttons)
