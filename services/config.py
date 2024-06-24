@@ -16,7 +16,8 @@ config: models.config.Config = {
 		"useRemainingTime": False,
 		"posters": {
 			"enabled": False,
-			"imgurClientID": "",
+			"cuDomain": "",
+			"cuSecret": "",
 		},
 		"buttons": [],
 	},

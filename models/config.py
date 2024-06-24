@@ -6,7 +6,8 @@ class Logging(TypedDict):
 
 class Posters(TypedDict):
 	enabled: bool
-	imgurClientID: str
+	cuDomain: str
+	cuSecret: str
 
 class Button(TypedDict):
 	label: str

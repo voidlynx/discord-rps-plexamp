@@ -4,15 +4,13 @@
 
 Discord Rich Presence for Plexamp is a Python script that displays your [Plex](https://www.plex.tv/) status on [Discord](https://discord.com/) using [Rich Presence](https://discord.com/developers/docs/rich-presence/how-to).
 
-[![Latest Release](https://shields.io/badge/Latest%20Release-v2.3.2-informational)](https://github.com/phin05/discord-rich-presence-plex/archive/refs/heads/master.zip)
-
 ## Usage
 
-1. Install [Python 3.10](https://www.python.org/downloads/) - Make sure to tick "Add Python 3.10 to PATH" during the installation.
-2. Download [this repository's contents](https://github.com/phin05/discord-rich-presence-plex/archive/refs/heads/master.zip).
+1. Install [Python](https://www.python.org/downloads/) - Make sure to tick "Add Python 3.XX to PATH" during the installation.
+2. Download [this repository's contents](https://github.com/voidlynx/discord-rps-plexamp/archive/refs/heads/master.zip).
 3. Extract the folder contained in the above ZIP file.
-4. Navigate a command-line interface (cmd.exe, PowerShell, bash, etc.) into the above-extracted directory.
-5. Install the required Python modules by running `python -m pip install -U -r requirements.txt`.
+4. Launch the `start.bat` file.
+5. Install the required Python modules by running `pip install -U -r requirements.txt`.
 6. Start the script by running `python main.py`.
 
 When the script runs for the first time, a `config.json` file will be created in the working directory and you will be prompted to complete the authentication flow to allow the script to retrieve an access token for your Plex account.
@@ -28,8 +26,9 @@ The script must be running on the same machine as your Discord client.
   * `hideTotalTime` (boolean, default: `false`) - Hides the total duration of the media if enabled.
   * `useRemainingTime` (boolean, default: `false`) - Displays the media's remaining time instead of elapsed time if enabled.
   * `posters`
-    * `enabled` (boolean, default: `false`) - Displays media posters if enabled. Requires `imgurClientID`.
-    * `imgurClientID` (string, default: `""`) - [Obtention Instructions](#obtaining-an-imgur-client-id)
+    * `enabled` (boolean, default: `false`) - Uses [cover-uploady](https://github.com/voidlynx/cover-uploady) to display a cover art. Requires `cuClientID`.
+    * `cuDomain` (string, default: `""`) - Domain that cover-uploady is hosted on. The `/upload` and `/cover.jpg` endpoints are automatically appended when required, don't worry.
+    * `cuSecret` (string, default: `""`) - Cover-uploady's secret passphrase for uploads. See below.
   * `buttons` (list) - [Information](#buttons)
     * `label` (string) - The label to be displayed on the button.
     * `url` (string) - A web address or a [dynamic URL placeholder](#dynamic-button-urls).
@@ -41,17 +40,22 @@ The script must be running on the same machine as your Discord client.
     * `blacklistedLibraries` (list, optional) - Alerts originating from libraries in this list are ignored.
     * `whitelistedLibraries` (list, optional) - If set, alerts originating from libraries that are not in this list are ignored.
 
-### Obtaining an Imgur client ID
+### Cover-Uploady usage
+This fork uses a microservice called [cover-uploady](https://github.com/voidlynx/cover-uploady) to display the cover art image. This service should be self-hosted and is for advanced users. Sorry. The original fork spammed Imgur's API and that, honestly, was worse. 
 
-1. Go to Imgur's [application registration page](https://api.imgur.com/oauth2/addclient).
-2. Enter any name for the application and pick OAuth2 without a callback URL as the authorisation type.
-3. Submit the form to obtain your application's client ID.
+1. Install [cover-uploady](https://github.com/voidlynx/cover-uploady).
+2. When writing the .env file, write a SECRET string. It can be whatever you want and however long or short you want, but longer is better, I keep mine at 32 chars.
+3. Copy the SECRET and insert it into `cuSecret` in the `config.json` file.
+4. Copy the domain that the microservice is hosted on (like `cover.vlnx.ru` in my case) to the `cuDomain` variable.
+5. Don't forget to switch `display.posters.enabled` to `true`! 
 
 ### Buttons
 
 Discord can display up to 2 buttons in your Rich Presence.
 
-Due to a strange Discord bug, these buttons are unresponsive or exhibit strange behaviour towards your own clicks, but other users are able to click on them to open their corresponding URLs.
+Due to a strange Discord bug, these buttons are unresponsive or exhibit strange behaviour towards your own clicks, but other users are able to click on them to open their corresponding URLs. (citation needed)
+
+Please don't abuse this as another funny field. Link to something worthwhile, don't just use it as an extra place to post your whatever.
 
 #### Dynamic Button URLs
 
@@ -72,7 +76,8 @@ During runtime, the following dynamic URL placeholders will get replaced with re
     "useRemainingTime": false,
     "posters": {
       "enabled": true,
-      "imgurClientID": "9e9sf637S8bRp4z"
+      "cuDomain": "cover.example.com",
+      "cuSecret": "9e9sf637S8bRp4z"
     },
     "buttons": [
       {
@@ -108,18 +113,3 @@ During runtime, the following dynamic URL placeholders will get replaced with re
 The "Display current activity as a status message" setting must be enabled in Discord Settings → Activity Settings → Activity Privacy.
 
 ![Discord Settings](https://user-images.githubusercontent.com/59180111/186830889-35af3895-ece0-4a7d-9efb-f68640116884.png)
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
-## Credits
-
-* [Discord](https://discord.com)
-* [Plex](https://www.plex.tv)
-* [Python-PlexAPI](https://github.com/pkkid/python-plexapi)
-* [Requests](https://github.com/psf/requests)
-* [websocket-client](https://github.com/websocket-client/websocket-client)
-
-
-The only difference between this one and the original is that this one says "Plexamp" instead of "Plex" inside of discord.
