@@ -14,6 +14,6 @@ def uploadImage(url: str) -> Optional[str]:
 		).json()
 		if "message" not in data:
 			raise Exception(data["error"])
-		return "https://" + config["display"]["posters"]["cuDomain"] + "/cover.jpg"
+		return "https://" + config["display"]["posters"]["cuDomain"] + "/" + data['hash'] + ".jpg"
 	except:
 		logger.exception("An unexpected error occured while uploading an image")
